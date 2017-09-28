@@ -10,7 +10,11 @@ pd.set_option('display.width', 1000)
 
 train = pd.read_csv('dataset/titanic/train.csv')
 
+# display the first 10 row of the dataset
 print(train.head(10))
+
+# summary of the whole dataset
+print(train.info())
 print(train.describe())
 
 def process_title(name):
@@ -32,8 +36,3 @@ plot2 = survive_age_group_by.size().unstack(fill_value=0).plot.bar(title="Age vs
 plot2.set(ylabel="Number of person")
 plt.tight_layout()
 plt.show()
-
-
-
-
-

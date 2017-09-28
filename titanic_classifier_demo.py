@@ -13,8 +13,6 @@ pd.set_option('display.width', 1000)
 
 def process_title(name):
     title = name.split(',')[1].split('.')[0].strip()
-    # white_list = ['Mr', 'Mrs', 'Miss', 'Master', 'Lady', 'Ms', 'Sir']
-
     return title
 
 # reading train data
@@ -27,12 +25,12 @@ test = pd.read_csv('dataset/titanic/test.csv')
 targets = train.Survived
 train.drop('Survived', 1, inplace=True)
 
-# merging train data and test data for future feature engineering
+# merging train data and test data for feature engineering and cleaning the data
 combined = train.append(test)
 combined.reset_index(inplace=True)
 combined.drop('index', inplace=True, axis=1)
 
-# lets fill in the missing value for ages. a simple approach will be taking the median and put into the missing slot
+# lets fill in the missing value for ages. a simple approach will be taking the median, mean or mode and put into the missing slot
 combined['Age'].fillna(combined['Age'].median(), inplace=True)
 combined['Fare'].fillna(combined['Fare'].median(), inplace=True)
 combined["Embarked"].fillna("S", inplace=True)
@@ -87,6 +85,7 @@ output = grid_search.predict(test).astype(int)
 
 test_df = pd.read_csv('dataset/titanic/test.csv')
 
+# write the result to csv in order to submit to Kaggle for the test set results
 submission = pd.DataFrame({
         "PassengerId": test_df["PassengerId"],
         "Survived": output
